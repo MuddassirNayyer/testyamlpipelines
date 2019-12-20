@@ -1,6 +1,9 @@
+trigger:
+- master
+
 pool:
-  name: Azure Pipelines
-  
+  vmImage: 'ubuntu-latest'
+
 steps:
 - task: DotNetCoreCLI@2
   displayName: 'Build project'
@@ -12,7 +15,7 @@ steps:
   displayName: 'Run Tests'
   inputs:
     command: test
-    projects: '**/*Tests/*.csproj'
+    projects: '${{ parameters.testfilesPattern }}'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: ArchiveFiles@2
